@@ -1,0 +1,12 @@
+<!-- replace 'td.item-price' -->
+	<% if item.part %>
+		<td class="item-price-show align-center">---</td>
+		<td class="item-price-edit align-center hidden">---</td>
+	<% else %>
+    <td class="item-price-show align-center">
+	    <%= item.line_item.single_money.to_html if item.line_item %>
+    </td>
+    <td class="item-price-edit hidden">
+      <%= number_field_tag :price, item.line_item.price, :min => 0, :class => "line_item_price", :size => 5, :value => item.line_item.price %>
+    </td>
+  <% end %>
