@@ -19,6 +19,14 @@ bundle
 bundle exec rails g spree_change_shipment_item_price:install
 ```
 
+Note: In the backend/all.js, the line
+```shell
+//= require spree/backend/spree_change_shipment_item_price
+```
+must appear before
+```shell
+//= require spree/backend/spree_product_assembly
+```
 Testing
 -------
 

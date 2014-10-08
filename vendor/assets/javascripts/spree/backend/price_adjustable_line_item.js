@@ -8,24 +8,10 @@ toggleItemEdit = function(){
   link.parents('tr').find('td.item-qty-show').toggle();
   link.parents('tr').find('td.item-qty-edit').toggle();
   link.parents('tr').find('td.item-price-edit').toggle();
+  link.parents('tr').find('td.item-price-show').toggle();
 
   return false;
 }
-
-//handle save click
-  $('a.save-item').click(function(){
-    var save = $(this);
-    var shipment_number = save.data('shipment-number');
-    var variant_id = save.data('variant-id');
-
-    var quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val());
-    var price = parseInt(save.parents('tr').find('input.line_item_price').val());
-
-    toggleItemEdit();
-    adjustShipmentItems(shipment_number, variant_id, quantity, price);
-    return false;
-  });
-
 
 adjustShipmentItems = function(shipment_number, variant_id, quantity, price){
     var shipment = _.findWhere(shipments, {number: shipment_number + ''});
@@ -48,10 +34,10 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity, price){
     url += '.json';
     var changes_to_line_item = {variant_id: variant_id}
     if(new_quantity!=0){
-      changes_to_line_item[:quantity] = new_quantity
+      changes_to_line_item.quantity = new_quantity
     }
     if(typeof price != 'undefined'){
-      changes_to_line_item[:price] = price
+      changes_to_line_item.price = price
     }
 
     if(new_quantity!=0 || typeof price != 'undefined'){
@@ -64,3 +50,23 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity, price){
       });
     }
 }
+
+$(document).ready(function () {
+  'use strict';
+
+//handle save click
+  $('a.save-item').unbind( "click" ); // unbind the line_items.js click event from spree_product_assembly and use ours instead.
+  $('a.save-item').click(function(){
+    var save = $(this);
+    var shipment_number = save.data('shipment-number');
+    var variant_id = save.data('variant-id');
+
+    var quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val());
+    var price = parseInt(save.parents('tr').find('input.line_item_price').val());
+
+    toggleItemEdit();
+    adjustShipmentItems(shipment_number, variant_id, quantity, price);
+    return false;
+  });
+
+});
