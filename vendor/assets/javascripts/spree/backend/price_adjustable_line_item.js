@@ -13,7 +13,7 @@ toggleItemEdit = function(){
   return false;
 }
 
-adjustShipmentItems = function(shipment_number, variant_id, quantity, price){
+adjustShipmentItems = function(shipment_number, variant_id, quantity, price, line_item_id){
     var shipment = _.findWhere(shipments, {number: shipment_number + ''});
     var inventory_units = _.where(shipment.inventory_units, {variant_id: variant_id});
 
@@ -32,7 +32,7 @@ adjustShipmentItems = function(shipment_number, variant_id, quantity, price){
     }
 
     url += '.json';
-    var changes_to_line_item = {variant_id: variant_id}
+    var changes_to_line_item = {variant_id: variant_id, line_item_id: line_item_id}
     if(new_quantity!=0){
       changes_to_line_item.quantity = new_quantity
     }
@@ -63,9 +63,10 @@ $(document).ready(function () {
 
     var quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val());
     var price = parseInt(save.parents('tr').find('input.line_item_price').val());
+    var line_item_id = parseInt(save.parents('tr').find('input.line_item_id').val());
 
     toggleItemEdit();
-    adjustShipmentItems(shipment_number, variant_id, quantity, price);
+    adjustShipmentItems(shipment_number, variant_id, quantity, price, line_item_id);
     return false;
   });
 
