@@ -1,7 +1,6 @@
 module Spree
   class OrderContents
 		def add_with_options(variant, quantity = 1, currency = nil, shipment = nil, options={})
-      binding.pry
       line_item = add_to_line_item_with_options(variant, quantity, currency, shipment, options)
       reload_totals
       shipment.present? ? shipment.update_amounts : order.ensure_updated_shipments
@@ -29,7 +28,6 @@ module Spree
         line_item =  grab_line_item_by_id(options[:line_item_id], raise_error = false, options) if options[:line_item_id]
 
         line_item ||= grab_line_item_by_variant(variant)
-        binding.pry
         if line_item
           line_item.target_shipment = shipment
           line_item.quantity += quantity.to_i
