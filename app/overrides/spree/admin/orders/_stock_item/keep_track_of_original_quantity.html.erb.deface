@@ -1,0 +1,2 @@
+<!-- replace 'erb:contains("number_field_tag :quantity, item.quantity")' -->
+<%= number_field_tag :quantity, item.quantity, :min => 0, :class => "line_item_quantity", :size => 5, :data => {:original_quantity => item.quantity} %>

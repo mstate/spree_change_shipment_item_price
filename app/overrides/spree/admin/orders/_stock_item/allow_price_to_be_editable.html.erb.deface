@@ -9,7 +9,7 @@
 	    <%= item.line_item.single_money.to_html if item.line_item %>
     </td>
     <td class="item-price-edit hidden">
-      <%= number_field_tag :price, item.line_item.try(:price), :min => 0, :class => "line_item_price", :size => 5 %>
+      <%= number_field_tag :price, item.line_item.try(:price), :min => 0, :class => "line_item_price", :size => 5%>
       <%= hidden_field_tag :line_item_id, item.line_item.try(:id), class: 'line_item_id' %>
     </td>
   <% end %>

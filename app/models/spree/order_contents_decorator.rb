@@ -24,11 +24,13 @@ module Spree
 		private
 
       def add_to_line_item_with_options(variant, quantity, currency=nil, shipment=nil, options={})
+        options[:force_new_line_item] ||= false
       
         line_item =  grab_line_item_by_id(options[:line_item_id], raise_error = false, options) if options[:line_item_id]
-
         line_item ||= grab_line_item_by_variant(variant)
-        if line_item
+
+
+        if line_item && !options[:force_new_line_item]
           line_item.target_shipment = shipment
           line_item.quantity += quantity.to_i
           line_item.currency = currency unless currency.nil?
@@ -68,6 +70,16 @@ module Spree
 
       def grab_line_item_by_id(line_item_id, raise_error = false, options = {})
         line_item = order.line_items.find(line_item_id)
+
+        if !line_item.present? && raise_error
+          raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
+        end
+
+        line_item
+      end
+
+      def grab_shipment_line_item_by_variant(shipment, variant, raise_error = false, options = {})
+        line_item = shipment.find_line_item_by_variant(variant, options)
 
         if !line_item.present? && raise_error
           raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
