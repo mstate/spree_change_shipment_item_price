@@ -1,0 +1,15 @@
+<!-- replace 'td.line-item-price' -->
+	<% if false %>
+		<td class="line-item-price-show align-center">---</td>
+		<td class="line-item-price-edit align-center hidden">---
+      ---<%= hidden_field_tag :line_item_id, item.try(:id) %>
+    </td>
+	<% else %>
+    <td class="line-item-price-show align-center">
+	    <%= item.single_money.to_html if item %>
+    </td>
+    <td class="line-item-price-edit hidden">
+      <%= number_field_tag :price, item.try(:price), :min => 0, :class => "line_item_price", :size => 5%>
+      <%= hidden_field_tag :line_item_id, item.try(:id), class: 'line_item_id' %>
+    </td>
+  <% end %>

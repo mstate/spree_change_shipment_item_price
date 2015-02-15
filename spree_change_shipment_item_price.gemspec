@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_change_shipment_item_price'
-  s.version     = '2.2.7.beta'
+  s.version     = '2.4.4.beta'
   s.summary     = 'Allow arbitrary changes to shipment item price'
   s.description = "This extension allows administrators to make changes to the price of a shipment's line item"
   s.required_ruby_version = '>= 1.9.3'
@@ -16,7 +16,8 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 2.4.0'
+  s.add_dependency 'spree_core', '~> 2.4.4.beta'
+  s.add_dependency 'spree_product_assembly'
 
   s.add_development_dependency 'capybara', '~> 2.4'
   s.add_development_dependency 'coffee-rails'
