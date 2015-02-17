@@ -1,14 +1,22 @@
-# The only changes from this to the original are the addition of line-item-price-edit/show to toggleLineItemEdit
-# and addition of price to adjustLineItem
+# The only fucntional changes from this to the original are
+# the addition of line-item-price-edit/show to toggleLineItemEdit
+# the addition of price to adjustLineItem
+
+# Also, all the click events set by Spree are unbound before rebinding with these events.
+# Spree methods can't be overridden because they are defined in an anonymous function and 
+# are therefore are not accessible from the global namespace.
 
 $(document).ready ->
   #handle edit click
+  $('a.edit-line-item').unbind('click')
   $('a.edit-line-item').click toggleLineItemEdit
 
   #handle cancel click
+  $('a.cancel-line-item').unbind('click')
   $('a.cancel-line-item').click toggleLineItemEdit
 
   #handle save click
+  $('a.save-line-item').unbind('click')
   $('a.save-line-item').click ->
     save = $ this
     line_item_id = save.data('line-item-id')
@@ -19,6 +27,7 @@ $(document).ready ->
     false
 
   # handle delete click
+  $('a.delete-line-item').unbind('click')
   $('a.delete-line-item').click ->
     if confirm(Spree.translations.are_you_sure_delete)
       del = $(this);
