@@ -7,16 +7,20 @@
 # are therefore are not accessible from the global namespace.
 
 $(document).ready ->
-  #handle edit click
+
+  # Unbinding click events set by Spree's line_items.js.coffee
   $('a.edit-line-item').unbind('click')
+  $('a.cancel-line-item').unbind('click')
+  $('a.save-line-item').unbind('click')
+  $('a.delete-line-item').unbind('click')
+
+  #handle edit click
   $('a.edit-line-item').click toggleLineItemEdit
 
   #handle cancel click
-  $('a.cancel-line-item').unbind('click')
   $('a.cancel-line-item').click toggleLineItemEdit
 
   #handle save click
-  $('a.save-line-item').unbind('click')
   $('a.save-line-item').click ->
     save = $ this
     line_item_id = save.data('line-item-id')
@@ -27,7 +31,6 @@ $(document).ready ->
     false
 
   # handle delete click
-  $('a.delete-line-item').unbind('click')
   $('a.delete-line-item').click ->
     if confirm(Spree.translations.are_you_sure_delete)
       del = $(this);
